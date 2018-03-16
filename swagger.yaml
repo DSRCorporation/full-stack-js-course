@@ -1,0 +1,497 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server for the online dictionary, test application for JS courses in VSU."
+  version: "1.0.0"
+  title: "Online Dictionary"
+  contact:
+    email: "dmitry.redkovolosov@dsr-corporation.com"
+host: "localhost:3000"
+basePath: "/api"
+produces:
+- "application/json"
+tags:
+- name: "students"
+  description: ""
+- name: "classes"
+  description: ""
+- name: "subjects"
+  description: ""
+- name: "marks"
+  description: ""
+- name: "teachers"
+  description: ""
+- name: "users"
+  description: ""
+- name: "security"
+  description: ""
+schemes:
+- "http"
+paths:
+  /students:
+    get:
+      tags:
+      - "students"
+      summary: "Get list of available students"
+      description: ""
+      operationId: "getStudents"
+      parameters:
+        - name: "classId"
+          in: "query"
+          description: "Identifier of the class"
+          required: false
+          type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        400:
+          description: "Bad Request. This error is returned if classId property is specified but has wrong format."
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if classId property is specified but user doesn't have access to this class."
+        404:
+          description: "Not Found. This error is returned if classId property is specified but there is no class with this identifier."
+  "/students/{id}":
+    get:
+      tags:
+      - "students"
+      summary: "Get single student"
+      description: ""
+      operationId: "getStudent"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Identifier of the student"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ExtendedStudent"
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this student."
+        404:
+          description: "Not Found"
+  /classes:
+    get:
+      tags:
+      - "classes"
+      summary: "Get list of available classes"
+      description: "Students will receive only their own class. Teachers will receive all classes where they have lessons."
+      operationId: "getClasses"
+      parameters: []
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Class"
+        401:
+          description: "Not Authorized"
+  "/classes/{id}":
+    get:
+      tags:
+      - "classes"
+      summary: "Get single class"
+      description: "Retrieve information about the single class. Response will also contain students array."
+      operationId: "getClass"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Identifier of the class"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ExtendedClass"
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this class."
+        404:
+          description: "Not Found"
+  /subjects:
+    get:
+      tags:
+      - "subjects"
+      summary: "Get list of available subjects"
+      description: ""
+      operationId: "getSubjects"
+      parameters: []
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Subject"
+        401:
+          description: "Not Authorized"
+  "/subjects/{id}":
+    get:
+      tags:
+      - "subjects"
+      summary: "Get single subject"
+      description: ""
+      operationId: "getSubject"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Identifier of the subject"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Subject"
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this subject."
+        404:
+          description: "Not Found"
+  /teachers:
+    get:
+      tags:
+      - "teachers"
+      summary: "Get list of available teachers"
+      description: ""
+      operationId: "getTeachers"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Teacher"
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this endpoint."
+  "/teachers/{id}":
+    get:
+      tags:
+      - "teachers"
+      summary: "Get single teacher"
+      description: "Retrieve information about the single teacher. Response will include classes where teacher has lessons."
+      operationId: "getTeacher"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Identifier of the teacher"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ExtendedTeacher"
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this teacher."
+        404:
+          description: "Not Found"
+  /marks:
+    get:
+      tags:
+      - "marks"
+      summary: "Get list of available marks"
+      description: "Get list of available marks with optional filters. Some of filters will be predefined. For the user with role 'Student' query parameter 'studentId' will contain his own identifier by default. For the user with role 'Teacher' query parameter 'subjectId' will contain his own identifier by default."
+      operationId: "getMarks"
+      parameters:
+      - in: "query"
+        name: "classId"
+        description: "Identifier of the class"
+        required: false
+        type: "integer"
+      - in: "query"
+        name: "subjectId"
+        description: "Identifier of the subject"
+        required: false
+        type: "integer"
+      - in: "query"
+        name: "studentId"
+        description: "Identifier of the student"
+        required: false
+        type: "integer"
+      - in: "query"
+        name: "date"
+        description: "Date when mark was created"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Mark"
+        400:
+          description: "Bad Request. This error is returned if some of query parameters are specified but have wrong format."
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if some of query parameters are specified but user doesn't have access to the entities associated with the specified identifiers."
+        404:
+          description: "Not Found. This error is returned if some of query parameters are specified but there is no entity associated with the specified identifiers."
+    post:
+      tags:
+      - "marks"
+      summary: "Create new mark"
+      description: ""
+      operationId: "addMark"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Mark's value and student"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            value:
+              type: "integer"
+              format: "int32"
+            studentId:
+              type: "integer"
+              format: "int64"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Mark"
+        400:
+          description: "Bad Request. This error is returned if some of body parameters have wrong format."
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this endpoint."
+        404:
+          description: "Not Found. This error is returned if there is no student with the specified identifier."
+  "/marks/{id}":
+    get:
+      tags:
+      - "marks"
+      summary: "Get single mark"
+      description: ""
+      operationId: "getMark"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Identifier of the mark"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Mark"
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this mark."
+        404:
+          description: "Not Found"
+    put:
+      tags:
+      - "marks"
+      summary: "Update mark"
+      description: ""
+      operationId: "putMark"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Identifier of the mark"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "value"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            value:
+              type: "integer"
+              format: "int32"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Mark"
+        400:
+          description: "Bad Request. This error is returned if 'value' parameter in body has wrong format."
+        401:
+          description: "Not Authorized"
+        403:
+          description: "Forbidden. This error is returned if user doesn't have access to this mark."
+        404:
+          description: "Not Found. This error is returned if there is no mark with the specified identifier."
+  /users/me:
+    get:
+      tags:
+        - "users"
+      summary: "Get information about current user"
+      description: "This endpoint can be used to know the role of the logged in user."
+      operationId: "getUserInfo"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/User"
+        401:
+          description: "Not authorized"
+  /security/login:
+    post:
+      tags:
+      - "security"
+      summary: "Perform login operation"
+      description: ""
+      operationId: "login"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema:
+          type: "object"
+          properties:
+            login:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        204:
+          description: "Success"
+        400:
+          description: "Bad Request. This error is returned if specified parameters have wrong format or there is no user with the specified login and password."
+  /security/logout:
+    post:
+      tags:
+      - "security"
+      summary: "Perform logout operation"
+      description: "This can only be done by the logged in user."
+      operationId: "logout"
+      responses:
+        204:
+          description: "Success"
+        401:
+          description: "Not Authorized"
+definitions:
+  Student:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      class:
+        $ref: "#/definitions/Class"
+  ExtendedStudent:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      address:
+        type: "string"
+      phone:
+        type: "string"
+      class:
+        $ref: "#/definitions/Class"
+  Class:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  ExtendedClass:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      students:
+        type: "array"
+        items:
+          $ref: "#/definitions/Student"
+  Subject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Teacher:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      subject:
+        $ref: "#/definitions/Subject"
+  ExtendedTeacher:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      address:
+        type: "string"
+      phone:
+        type: "string"
+      subject:
+        $ref: "#/definitions/Subject"
+      classes:
+        type: "array"
+        items:
+          $ref: "#/definitions/Class"
+  Mark:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      value:
+        type: "integer"
+        format: "int32"
+      date:
+        type: "string"
+        format: "date"
+        example: "2018-02-16"
+      student:
+        $ref: "#/definitions/Student"
+      class:
+        $ref: "#/definitions/Class"
+      subject:
+        $ref: "#/definitions/Subject"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      role:
+        type: "string"

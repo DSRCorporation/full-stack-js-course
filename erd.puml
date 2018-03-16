@@ -1,0 +1,47 @@
+@startuml
+
+title Digital Diary ERD
+
+object User {
+    id: integer
+    name: string
+    address: string
+    phone: string
+}
+object Student {
+    id: integer
+    user: FK(User)
+    class: FK(Class)
+}
+object Teacher {
+    id: integer
+    user: FK(User)
+    subject: FK(Subject)
+}
+object Class {
+    id: integer
+    name: string
+}
+object Mark {
+    id: integer
+    value: integer
+    subject: FK(Subject)
+    date: Date
+    student: FK(Student)
+    teacher: FK(Teacher)
+}
+object Subject {
+    id: integer
+    name: string
+}
+
+User ||--|| Teacher
+User ||--|| Student
+Class ||--o{ Student
+Class }o--o{ Teacher
+Subject ||--o{ Teacher
+Mark }o--|| Subject
+Mark }o--|| Student
+Mark }o--|| Teacher
+
+@enduml
