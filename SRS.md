@@ -124,6 +124,6 @@ Delivery requirements:
 
 1. The server app, the web app and documentation should be stored in one public repo on Github licensed under MIT license
 2. The system should start with a single command (bash ./start.sh and etc.). After executing this command an end-user should be able to access the web app at [http://localhost:3001](http://localhost:3001/) and the server app at [http://localhost:3000](http://localhost:3000/)
-3. The system should have a pre-defined list of 15 students, 5 subjects, 5 teachers, 3 classes and 1 principal
+3. The system should have a pre-defined list of 15 students, 5 subjects, 5 teachers and 3 classes
 4. If any one of the apps has system dependencies a list of these dependencies should be specified in README
 5. A list with pre-defined user names and passwords should be stored in a format of username:password in credentials.txt in the root of the repo
