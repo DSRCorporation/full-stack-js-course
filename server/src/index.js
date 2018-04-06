@@ -1,30 +1,36 @@
 'use strict'
 
-require('app-module-path').addPath(__dirname + '/libs')
+const path = require('path')
+require('app-module-path').addPath(path.resolve(__dirname))
 
 const Express = require('express')
 const {
-    initializerModels,
-    initializerSeed,
-    initializerSequelize
+  initializerModels,
+  initializerSeed,
+  initializerSequelize,
+  initializerMiddlewares,
+  initializerRoutes
 } = require('initializers')
-
-const PORT = 3000
+const config = require('config')
+const { app: logger } = require('utils/logger')
 
 const main = async () => {
-    console.log('main')
+  const { port } = config.get('express')
+  logger.info('main', { port })
 
-    const app = new Express()
+  const app = new Express()
 
-    await initializerSequelize()
-    await initializerModels()
-    await initializerSeed()
+  await initializerSequelize(app)
+  await initializerModels(app)
+  await initializerSeed(app)
+  await initializerMiddlewares(app)
+  await initializerRoutes(app)
 
-    await new Promise((resolve, reject) => app
-        .listen(PORT, resolve)
-        .on('error', reject))
+  await new Promise((resolve, reject) => app
+    .listen(port, resolve)
+    .on('error', reject))
 
-    console.log('main -> done')
+  logger.info('main -> done')
 }
 
-main().catch(console.error)
+main().catch((err) => logger.error('Uncaught expection %j', err))

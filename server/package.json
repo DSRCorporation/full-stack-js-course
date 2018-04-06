@@ -5,16 +5,24 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "lint": "node_modules/.bin/standard",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
     "app-module-path": "^2.2.0",
+    "body-parser": "^1.18.2",
     "chance": "^1.0.13",
+    "config": "^1.30.0",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.37.5"
+    "sequelize": "^4.37.5",
+    "winston": "^3.0.0-rc3"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
   }
 }
