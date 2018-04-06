@@ -68,15 +68,13 @@ Web application should provide the following major functions:
     1. View a list of students
 4. Teachers
     1. View a list of teachers
-    2. Assign a class to a teacher
-    3. Take a class away from a teacher
 5. Marks
     1. View a list of marks
     2. Add a new mark
         1. Each mark is a number from 2 to 5
     3. Edit an existing mark
 6. Subjects
-    1. View a list of existing subjects
+    1. View a list of subjects
 
 ## User interfaces
 
