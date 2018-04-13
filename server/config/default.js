@@ -12,15 +12,30 @@ const configDefault = {
     base: '/api',
     v1: '/v1'
   },
+  security: {
+    pepper: 'nmWwY73T546vaaT6vBRw',
+    saltRounds: 10,
+    roles: {
+      teacher: 'teacher'
+    },
+    cookie: {
+      name: 'auth',
+      config: {
+        httpOnly: true,
+        maxAge: 1800000
+      }
+    }
+  },
   db: {
     seed: {
       numTeachers: 15,
-      numSubjects: 5
+      numSubjects: 5,
+      numClasses: 3
     },
     config: {
       database: 'digital-diary-server',
       username: 'postgres',
-      password: 'password',
+      password: null,
       host: 'localhost',
       port: 5432,
       dialect: 'postgres'
