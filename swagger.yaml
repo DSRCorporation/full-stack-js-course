@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "This is a sample server for the online dictionary, test application for JS courses in VSU."
+  description: "This is a sample server for the digital diary, test application for JS courses in VSU."
   version: "1.0.0"
-  title: "Online Dictionary"
+  title: "Digital Diary"
   contact:
     email: "dmitry.redkovolosov@dsr-corporation.com"
 host: "localhost:3000"
@@ -44,9 +44,7 @@ paths:
         200:
           description: "Success"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Student"
+            $ref: "#/definitions/StudentList"
         400:
           description: "Bad Request. This error is returned if classId property is specified but has wrong format."
         401:
@@ -91,9 +89,7 @@ paths:
         200:
           description: "Success"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Class"
+            $ref: "#/definitions/ClassList"
         401:
           description: "Not Authorized"
   "/classes/{id}":
@@ -132,9 +128,7 @@ paths:
         200:
           description: "Success"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Subject"
+            $ref: "#/definitions/SubjectList"
         401:
           description: "Not Authorized"
   "/subjects/{id}":
@@ -172,9 +166,7 @@ paths:
         200:
           description: "Success"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Teacher"
+            $ref: "#/definitions/TeacherList"
         401:
           description: "Not Authorized"
         403:
@@ -235,9 +227,7 @@ paths:
         200:
           description: "Success"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Mark"
+            $ref: "#/definitions/MarkList"
         400:
           description: "Bad Request. This error is returned if some of query parameters are specified but have wrong format."
         401:
@@ -262,10 +252,11 @@ paths:
           properties:
             value:
               type: "integer"
-              format: "int32"
             studentId:
               type: "integer"
-              format: "int64"
+          required:
+            - value
+            - studentId
       responses:
         200:
           description: "Success"
@@ -324,6 +315,8 @@ paths:
             value:
               type: "integer"
               format: "int32"
+          required:
+            - value
       responses:
         200:
           description: "Success"
@@ -369,8 +362,10 @@ paths:
             password:
               type: "string"
       responses:
-        204:
+        200:
           description: "Success"
+          schema:
+            $ref: "#/definitions/User"
         400:
           description: "Bad Request. This error is returned if specified parameters have wrong format or there is no user with the specified login and password."
   /security/logout:
@@ -386,95 +381,203 @@ paths:
         401:
           description: "Not Authorized"
 definitions:
+  StudentList:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+        example: 10
+      entities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Student"
+    required:
+      - count
+      - entities
   Student:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 1
       name:
         type: "string"
+        example: "Darth Vader"
       class:
         $ref: "#/definitions/Class"
+    required:
+      - id
+      - name
+      - class
   ExtendedStudent:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 1
       name:
         type: "string"
+        example: "Anakin Skywalker"
       address:
         type: "string"
+        example: "Tatooine"
       phone:
         type: "string"
+        example: "+79000000000"
       class:
         $ref: "#/definitions/Class"
+    required:
+      - id
+      - name
+      - address
+      - phone
+      - class
+  ClassList:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+        example: 10
+      entities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Class"
+    required:
+      - count
+      - entities
   Class:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 2
       name:
         type: "string"
+        example: "Naboo"
+    required:
+      - id
+      - name
   ExtendedClass:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 2
       name:
         type: "string"
+        example: "Naboo"
       students:
         type: "array"
         items:
           $ref: "#/definitions/Student"
+    required:
+      - id
+      - name
+      - students
+  SubjectList:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+        example: 10
+      entities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Subject"
+    required:
+      - count
+      - entities
   Subject:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 3
       name:
         type: "string"
+        example: "Force"
+    required:
+      - id
+      - name
+  TeacherList:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+        example: 10
+      entities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Teacher"
+    required:
+      - count
+      - entities
   Teacher:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 5
       name:
         type: "string"
+        example: "Obi-Wan Kenobi"
       subject:
         $ref: "#/definitions/Subject"
+    required:
+      - id
+      - name
+      - subject
   ExtendedTeacher:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 5
       name:
         type: "string"
+        example: "Obi-Wan Kenobi"
       address:
         type: "string"
+        example: "Stewjon"
       phone:
         type: "string"
+        example: "+79000000000"
       subject:
         $ref: "#/definitions/Subject"
       classes:
         type: "array"
         items:
           $ref: "#/definitions/Class"
+    required:
+      - id
+      - name
+      - address
+      - phone
+      - subject
+      - classes
+  MarkList:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+        example: 10
+      entities:
+        type: "array"
+        items:
+          $ref: "#/definitions/Mark"
+    required:
+      - count
+      - entities
   Mark:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 8
       value:
         type: "integer"
-        format: "int32"
+        example: 2
+        description: "A mark from 2 to 5"
       date:
         type: "string"
         format: "date"
@@ -485,13 +588,29 @@ definitions:
         $ref: "#/definitions/Class"
       subject:
         $ref: "#/definitions/Subject"
+    required:
+      - id
+      - value
+      - date
+      - student
+      - class
+      - subject
   User:
     type: "object"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        example: 13
       name:
         type: "string"
+        example: "Darth Vader"
       role:
         type: "string"
+        enum: [ "student", "teacher" ]
+        example: "student"
+    required:
+      - id
+      - name
+      - role
+        
+    
