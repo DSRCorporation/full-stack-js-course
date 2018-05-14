@@ -1,0 +1,6 @@
+export default {
+  FORBIDDEN: 'FORBIDDEN',
+  ROUTE_LOGIN: 'LOGIN',
+  ROUTE_MAIN: 'MAIN',
+  ROUTE_CLASSES: 'CLASSES'
+}

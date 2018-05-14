@@ -1,0 +1,92 @@
+.Bgc\(\#a2cea2\) {
+  background-color: #a2cea2;
+}
+.Bgc\(\#ccc\) {
+  background-color: #ccc;
+}
+.Bgc\(\#ddd\) {
+  background-color: #ddd;
+}
+.Bgc\(\#eee\) {
+  background-color: #eee;
+}
+.C\(\#fff\) {
+  color: #fff;
+}
+.C\(red\) {
+  color: red;
+}
+.Cur\(p\) {
+  cursor: pointer;
+}
+.D\(f\) {
+  display: flex;
+}
+.Fld\(c\) {
+  flex-direction: column;
+}
+.Ai\(c\) {
+  align-items: center;
+}
+.Jc\(c\) {
+  justify-content: center;
+}
+.Fl\(end\) {
+  float: right;
+}
+.H\(100\%\) {
+  height: 100%;
+}
+.H\(30px\) {
+  height: 30px;
+}
+.H\(50px\) {
+  height: 50px;
+}
+.Lh\(50px\) {
+  line-height: 50px;
+}
+.M\(a\) {
+  margin: auto;
+}
+.My\(10px\), .Mt\(10px\) {
+  margin-top: 10px;
+}
+.My\(10px\) {
+  margin-bottom: 10px;
+}
+.Mt\(20px\) {
+  margin-top: 20px;
+}
+.P\(10px\) {
+  padding: 10px;
+}
+.P\(50px\) {
+  padding: 50px;
+}
+.P\(5px\) {
+  padding: 5px;
+}
+.Px\(10px\) {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.Px\(50px\) {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.Ta\(c\) {
+  text-align: center;
+}
+.W\(100\%\) {
+  width: 100%;
+}
+.W\(100px\) {
+  width: 100px;
+}
+.W\(1200px\) {
+  width: 1200px;
+}
+.W\(200px\) {
+  width: 200px;
+}
