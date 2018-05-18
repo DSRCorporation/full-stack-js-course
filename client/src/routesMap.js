@@ -1,6 +1,13 @@
+import classes from 'thunks/classes'
+
 export default {
   FORBIDDEN: '/forbidden',
-  CLASSES: '/classes',
+  CLASSES: {
+    path: '/classes',
+    thunk: (dispatch, getState) => {
+      dispatch(classes.getClasses())
+    }
+  },
   LOGIN: '/login',
   MAIN: {
     path: '/',

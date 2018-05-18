@@ -1,3 +1,10 @@
+.Bd {
+  border-width: 1px;
+  border-style: solid;
+}
+.Bdc\(black\) {
+  border-color: black;
+}
 .Bgc\(\#a2cea2\) {
   background-color: #a2cea2;
 }
@@ -9,6 +16,12 @@
 }
 .Bgc\(\#eee\) {
   background-color: #eee;
+}
+.Bgc\(grey\)\:disabled:disabled {
+  background-color: grey;
+}
+.Bgc\(white\) {
+  background-color: white;
 }
 .C\(\#fff\) {
   color: #fff;
@@ -49,14 +62,20 @@
 .M\(a\) {
   margin: auto;
 }
-.My\(10px\), .Mt\(10px\) {
+.My\(5px\), .Mt\(5px\) {
+  margin-top: 5px;
+}
+.My\(5px\) {
+  margin-bottom: 5px;
+}
+.Mt\(10px\) {
   margin-top: 10px;
 }
-.My\(10px\) {
-  margin-bottom: 10px;
+.Mb\(30px\) {
+  margin-bottom: 30px;
 }
-.Mt\(20px\) {
-  margin-top: 20px;
+.B\(10px\) {
+  bottom: 10px;
 }
 .P\(10px\) {
   padding: 10px;
@@ -74,6 +93,12 @@
 .Px\(50px\) {
   padding-left: 50px;
   padding-right: 50px;
+}
+.Pos\(a\) {
+  position: absolute;
+}
+.Pos\(r\) {
+  position: relative;
 }
 .Ta\(c\) {
   text-align: center;

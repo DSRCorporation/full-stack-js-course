@@ -6,10 +6,10 @@ const initialState = {
   isFetching: false
 }
 
-const classesReducer = handleActions({
+const classes = handleActions({
   [GET_CLASSES_REQUEST]: (state, action) => Object.assign({}, state, { isFetching: true }),
   [GET_CLASSES_SUCCESS]: (state, action) => Object.assign({}, state, { data: action.payload, isFetching: false }),
   [GET_CLASSES_FAILURE]: (state, action) => Object.assign({}, state, { isFetching: false })
 }, initialState)
 
-export default classesReducer
+export default classes
